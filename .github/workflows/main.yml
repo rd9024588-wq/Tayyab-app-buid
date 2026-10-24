@@ -1,0 +1,70 @@
+
+name: Build Tayyab Filling Station APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: Tayyab_Filling_Station_APK_Cloud_Build/package.json
+
+      - name: Install Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Check project files
+        working-directory: Tayyab_Filling_Station_APK_Cloud_Build
+        run: |
+          echo "Checking project..."
+          test -f package.json
+          test -f capacitor.config.json
+          test -f www/index.html
+          echo "Project files found."
+
+      - name: Install project dependencies
+        working-directory: Tayyab_Filling_Station_APK_Cloud_Build
+        run: npm install
+
+      - name: Prepare Capacitor Android project
+        working-directory: Tayyab_Filling_Station_APK_Cloud_Build
+        run: |
+          npm install @capacitor/core@^6 @capacitor/android@^6
+          npm install --save-dev @capacitor/cli@^6
+          npx cap add android
+
+      - name: Sync app files
+        working-directory: Tayyab_Filling_Station_APK_Cloud_Build
+        run: npx cap sync android
+
+      - name: Build APK
+        working-directory: Tayyab_Filling_Station_APK_Cloud_Build/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tayyab-Filling-Station-APK
+          path: Tayyab_Filling_Station_APK_Cloud_Build/android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
