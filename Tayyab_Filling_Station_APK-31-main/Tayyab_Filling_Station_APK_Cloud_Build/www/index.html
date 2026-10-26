@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b6b4f">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Tayyab Filling Station - Credit & Debit Fast v3.2</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f6f9;color:#17202a}
+header{background:#123b2a;color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:24px} header small{opacity:.8}
+nav{display:flex;gap:8px;padding:12px;background:#fff;border-bottom:1px solid #ddd;flex-wrap:wrap}
+button,.btn{border:0;border-radius:7px;padding:10px 14px;cursor:pointer;background:#1769aa;color:#fff;font-weight:600}
+button.danger{background:#c0392b}.secondary{background:#607d8b}.success{background:#18864b}
+nav button{background:#e8eef2;color:#17202a}.active{background:#1769aa;color:#fff!important}
+main{padding:20px;max-width:1300px;margin:auto}.page{display:none}.page.active{display:block}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.dash-card{cursor:pointer;user-select:none}.dash-card:focus{outline:3px solid #0b6b4f33}
+.card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px #0001;min-height:120px;color:#17202a}.card-title{display:block!important;color:#17202a!important;font-size:18px!important;font-weight:700!important;visibility:visible!important;opacity:1!important}.card b{display:block!important;font-size:25px;margin-top:12px;color:#17202a!important;visibility:visible!important;opacity:1!important}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{background:#fff;padding:18px;border-radius:10px;box-shadow:0 2px 8px #0001}
+label{display:block;font-weight:600;margin:8px 0 5px}input,select,textarea{width:100%;padding:10px;border:1px solid #ccd3d8;border-radius:6px}
+table{width:100%;border-collapse:collapse;background:#fff;color:#17202a}th,td{padding:10px;border-bottom:1px solid #e5e7e9;text-align:left;color:#17202a!important}th{background:#eef3f6!important;color:#17202a!important;font-weight:700!important}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.right{text-align:right}.credit{color:#18864b;font-weight:bold}.debit{color:#c0392b;font-weight:bold}
+@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}}@media print{body{background:#fff}.no-print,nav,header button{display:none!important}.page{display:none!important}.page.active{display:block!important}.panel{box-shadow:none}.toolbar{display:none!important}}
+
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.table-wrap{overflow:auto}
+.status{font-size:12px;opacity:.85}
+@media(max-width:800px){
+ .cards{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}
+ .panel,.card{overflow-x:auto} table{font-size:13px;min-width:650px}
+}
+
+/* ===== TAYYAB FILLING STATION v3.2 — FAST MODERN THEME ===== */
+:root{
+  --primary:#0b6b4f;
+  --primary-dark:#064b39;
+  --accent:#f4b400;
+  --accent-dark:#d99800;
+  --bg:#f4f7f6;
+  --surface:#ffffff;
+  --text:#17312a;
+  --muted:#64756f;
+  --border:#d9e4df;
+  --danger:#c0392b;
+  --info:#1261a0;
+}
+body{background:var(--bg);color:var(--text)}
+header{
+  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+  padding:16px 24px;box-shadow:0 2px 12px #064b3926;position:sticky;top:0;z-index:20
+}
+header h1{font-weight:800;letter-spacing:.2px}
+nav{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  box-shadow:0 2px 8px #17312a0b;padding:10px 12px
+}
+nav button{background:#edf4f1;color:var(--text);transition:background .12s,transform .08s}
+nav button:hover{background:#dfece7}
+nav .active,.active{background:var(--primary)!important;color:#fff!important}
+button,.btn{background:var(--primary);transition:filter .12s,transform .08s}
+button:hover,.btn:hover{filter:brightness(.94)}
+button:active,.btn:active{transform:translateY(1px)}
+button.success,.success{background:#18864b}
+button.danger,.danger{background:var(--danger)}
+.secondary{background:#607d8b}
+input,select,textarea{
+  border:1px solid var(--border);border-radius:7px;background:#fff;color:var(--text);
+  transition:border-color .12s,box-shadow .12s
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--primary);box-shadow:0 0 0 3px #0b6b4f18
+}
+.card{
+  border:1px solid var(--border);box-shadow:0 3px 12px #17312a0b;
+  transition:transform .12s,box-shadow .12s
+}
+.card:hover{transform:translateY(-1px);box-shadow:0 6px 18px #17312a12}
+.card-title{color:var(--muted)!important}
+.card b{color:var(--primary-dark)!important}
+table{border:1px solid var(--border);border-radius:8px;overflow:hidden}
+th{background:#eaf3ef!important;color:var(--primary-dark)!important}
+tr:nth-child(even){background:#fafcfb}
+tr:hover{background:#f1f7f4}
+.status,.success-text{color:var(--primary)}
+.badge{border-radius:999px}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){
+  header{padding:12px 15px}header h1{font-size:19px}
+  main{padding:12px}.cards{grid-template-columns:1fr}
+  nav{gap:5px}nav button{padding:8px 10px}
+}
+
+
+.pdf-header{text-align:center;border-bottom:2px solid #222;padding:8px 0 10px;margin-bottom:12px}.pdf-brand{font-size:24px;font-weight:800;letter-spacing:.2px}.pdf-location{font-size:13px;margin-top:2px}.pdf-subtitle{font-size:14px;font-weight:600;margin-top:4px}.pdf-header+h2{text-align:center;margin:8px 0 12px}
+</style>
+</head>
+<body>
+<header><div><h1>Tayyab Filling Station</h1><small>Digi Khata + Credit & Debit Management System — Offline | Fast v3.3.1 — Dashboard Linked</small></div><div><div id="clock"></div><div id="status" class="status"></div></div></header>
+<nav>
+<button onclick="show('dashboard')" class="active">Dashboard</button>
+<button onclick="show('parties')">Parties</button>
+  <button onclick="show('suppliers')">Suppliers</button>
+<button onclick="show('entries')">Credit / Debit</button>
+<button onclick="show('reports')">Reports</button>
+<button onclick="show('backup')">Backup / Restore</button>
+<button onclick="show('recycle')">Recycle Bin</button>
+</nav>
+<main>
+<section id="dashboard" class="page active">
+<div class="cards">
+<div class="card dash-card" tabindex="0" onclick="show('entries')"><div class="card-title">Total Credit</div><b id="dCredit">0.00</b><small>Open Credit / Debit</small></div>
+<div class="card dash-card" tabindex="0" onclick="show('entries')"><div class="card-title">Total Debit</div><b id="dDebit">0.00</b><small>Open Entry History</small></div>
+<div class="card dash-card" tabindex="0" onclick="show('parties')"><div class="card-title">Receivable</div><b id="dReceivable">0.00</b><small>Open Customers</small></div>
+<div class="card dash-card" tabindex="0" onclick="show('parties')"><div class="card-title">Payable</div><b id="dPayable">0.00</b><small>Open Customers</small></div>
+<div class="card dash-card" tabindex="0" onclick="show('suppliers')"><div class="card-title">Supplier Payable</div><b id="dSupplierPayable">0.00</b><small>Open Suppliers</small></div>
+<div class="card dash-card" tabindex="0" onclick="show('suppliers')"><div class="card-title">Supplier Receivable</div><b id="dSupplierReceivable">0.00</b><small>Open Suppliers</small></div>
+<div class="card dash-card" tabindex="0" onclick="show('suppliers')"><div class="card-title">Total Suppliers</div><b id="dSuppliers">0</b><small>Manage Suppliers</small></div>
+<div class="card dash-card" tabindex="0" onclick="show('parties')"><div class="card-title">Total Customers</div><b id="dParties">0</b><small>Manage Customers</small></div>
+</div>
+<div class="panel dashboard-actions">
+<h2 style="color:#17202a!important;visibility:visible">Quick Actions</h2>
+<div class="actions">
+<button onclick="show('parties')">+ Customer / Party</button>
+<button onclick="show('suppliers')">+ Supplier</button>
+<button onclick="show('entries')">+ Credit / Debit</button>
+<button onclick="show('reports')">Reports / PDF</button>
+<button onclick="show('backup')">Backup / Restore</button>
+<button onclick="show('recycle')">Recycle Bin</button>
+</div></div>
+<div class="panel quick-panel">
+<h2 style="color:#17202a!important;visibility:visible">Quick Khata Search</h2>
+<div class="toolbar">
+<input id="quickSearch" placeholder="Search customer / supplier..." oninput="quickKhataSearch()">
+<button onclick="clearQuickSearch()" class="secondary">Clear</button>
+</div>
+<div id="quickResults"></div>
+</div>
+<div class="panel"><h2 style="color:#17202a!important;visibility:visible">Recent Entries</h2><div id="recent"></div></div>
+<div class="panel"><h2 style="color:#17202a!important;visibility:visible">Recent Supplier Transactions</h2><div id="recentSuppliers"></div></div>
+</section>
+
+<section id="parties" class="page">
+<div class="grid">
+<div class="panel"><h2>Add / Edit Party</h2>
+<input type="hidden" id="partyId">
+<label>Party Name</label><input id="partyName" placeholder="Party name">
+<label>Phone</label><input id="partyPhone" placeholder="Phone">
+<label>Opening Balance</label><input id="opening" type="number" step="0.01" value="0">
+<label>Balance Type</label><select id="openingType"><option value="credit">Receivable (Credit)</option><option value="debit">Payable (Debit)</option></select>
+<br><br><button onclick="saveParty()" class="success">Save Party</button>
+<button onclick="clearParty()" class="secondary">Clear</button>
+</div>
+<div class="panel"><h2>Party List</h2><input id="partySearch" oninput="renderParties()" placeholder="Search party..."><br><br><div id="partyTable"></div></div>
+</div>
+</section>
+
+
+<section id="suppliers" class="page">
+<h2>Suppliers</h2>
+<div class="card">
+<h3>Add / Edit Supplier</h3>
+<input type="hidden" id="supplierId">
+<div class="grid">
+<div><label>Supplier Name</label><input id="supplierName" placeholder="Supplier name"></div>
+<div><label>Phone</label><input id="supplierPhone" placeholder="Phone"></div>
+<div><label>Opening Balance</label><input id="supplierOpening" type="number" step="0.01" placeholder="0"></div>
+<div><label>Balance Type</label><select id="supplierOpeningType"><option value="credit">Credit / Payable</option><option value="debit">Debit / Receivable</option></select></div>
+</div>
+<div class="actions"><button onclick="saveSupplier()">Save Supplier</button><button class="secondary" onclick="clearSupplier()">Clear</button></div>
+</div>
+
+<div class="card">
+<h3>Supplier List</h3>
+<input id="supplierSearch" placeholder="Search supplier..." oninput="renderSuppliers()">
+<div class="table-wrap"><table><thead><tr><th>Supplier</th><th>Phone</th><th>Balance</th><th>Action</th></tr></thead><tbody id="supplierList"></tbody></table></div>
+</div>
+
+<div class="card">
+<h3>New Supplier Credit / Debit</h3>
+<div class="grid">
+<div><label>Date</label><input id="seDate" type="date"></div><div><label>Time</label><input id="seTime" type="time" step="1"></div>
+<div><label>Supplier</label><select id="seSupplier"><option value="">Select Supplier</option></select></div>
+<div><label>Type</label><select id="seType"><option value="credit">Credit / Purchase</option><option value="debit">Debit / Payment</option></select></div>
+<div><label>Amount</label><input id="seAmount" type="number" step="0.01" placeholder="0"></div>
+<div style="grid-column:1/-1"><label>Description</label><input id="seNote" placeholder="Description / note"></div>
+</div>
+<div class="actions"><button onclick="saveSupplierEntry()">Save Transaction</button><button class="secondary" onclick="clearSupplierEntry()">Clear</button></div>
+</div>
+
+<div class="card">
+<h3>Supplier Transactions</h3>
+<div class="grid">
+<div><label>Supplier</label><select id="supplierFilter" onchange="renderSupplierEntries()"><option value="">All Suppliers</option></select></div>
+<div><label>From Date</label><input id="supplierFrom" type="date" onchange="renderSupplierEntries()"></div>
+<div><label>To Date</label><input id="supplierTo" type="date" onchange="renderSupplierEntries()"></div>
+</div>
+<div class="actions"><button onclick="generateSupplierPDF()">Generate Supplier PDF</button></div>
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>Time</th><th>Supplier</th><th>Type</th><th>Amount</th><th>Description</th><th>Action</th></tr></thead><tbody id="supplierEntries"></tbody></table></div>
+</div>
+</section>
+
+<section id="entries" class="page">
+<div class="grid">
+<div class="panel"><h2>New Credit / Debit Entry</h2>
+<label>Date</label><input id="eDate" type="date"><label>Time</label><input id="eTime" type="time" step="1">
+<label>Party</label><select id="eParty"></select>
+<label>Type</label><select id="eType"><option value="credit">Credit / Sale</option><option value="debit">Debit / Payment</option></select>
+<label>Amount</label><input id="eAmount" type="number" step="0.01" min="0">
+<label>Description</label><textarea id="eNote" rows="3" placeholder="Description"></textarea>
+<br><br><button onclick="saveEntry()" class="success">Save Entry</button>
+<button onclick="clearEntry()" class="secondary">Clear</button>
+</div>
+<div class="panel"><h2>Entry History</h2>
+<div class="toolbar"><input id="entrySearch" oninput="renderEntries()" placeholder="Search..."><input id="fromDate" type="date" onchange="renderEntries()"><input id="toDate" type="date" onchange="renderEntries()"></div>
+<div id="entryTable"></div></div>
+</div>
+</section>
+
+<section id="reports" class="page">
+<div class="panel"><h2>Reports</h2>
+<div class="toolbar"><input id="rFrom" type="date"><input id="rTo" type="date"><select id="rParty"></select><select id="rPayment" title="Payment filter"><option value="">All Payments</option><option value="credit">Credit Only</option><option value="debit">Debit Only</option></select><button onclick="generateReport()">Generate</button><button onclick="generateSelectedPartyPDF()" class="success">Party PDF</button><button onclick="createFastPDF()" class="success">Create PDF</button><button onclick="generateAllPartiesPDF()" class="success">All Parties PDF</button><button onclick="generateAllSuppliersPDF()" class="success">All Suppliers PDF</button><button onclick="window.print()" class="secondary">Print</button></div>
+<div id="report"></div>
+</div>
+</section>
+
+<section id="recycle" class="page">
+<div class="panel"><h2>Recycle Bin</h2>
+<p>Deleted parties, suppliers and transactions stay here until you permanently remove them.</p>
+<div class="actions"><button onclick="renderTrash()" class="secondary">Refresh</button><button onclick="emptyTrash()" class="danger">Empty Recycle Bin</button></div>
+<div class="table-wrap"><table><thead><tr><th>Deleted</th><th>Type</th><th>Name / Details</th><th>Action</th></tr></thead><tbody id="trashList"></tbody></table></div>
+</div>
+</section>
+
+<section id="backup" class="page">
+<div class="panel"><h2>Cloud Sync — Mobile & Computer</h2>
+<p>Configure your Supabase Project URL and Publishable Key. Sign in with the same Supabase Auth user on each device. Make a JSON backup before first sync.</p>
+<label for="sbUrl">Supabase Project URL</label><input id="sbUrl" type="url" placeholder="https://your-project.supabase.co" autocomplete="url">
+<label for="sbKey">Supabase Publishable Key</label><input id="sbKey" type="password" placeholder="sb_publishable_..." autocomplete="off">
+<div class="actions"><button onclick="saveCloudConfig()" class="secondary">Save Connection Settings</button><button onclick="clearCloudConfig()" class="secondary">Clear Settings</button></div>
+<hr>
+<label for="sbEmail">Account Email</label><input id="sbEmail" type="email" placeholder="Your Supabase Auth email" autocomplete="username">
+<label for="sbPassword">Account Password</label><input id="sbPassword" type="password" placeholder="Your Supabase Auth password" autocomplete="current-password">
+<div class="actions"><button onclick="cloudSignIn()">Sign In</button><button onclick="cloudSignOut()" class="secondary">Sign Out</button><button onclick="cloudSyncNow()" class="success">Sync Now</button></div>
+<p id="cloudStatus" class="small" role="status" aria-live="polite">Not connected.</p>
+<p class="small"><b>Safe-use note:</b> Sync Now compares local and cloud changes. If both devices changed since the last sync, it asks you to choose which copy to keep. Until the sync is tested, continue making backups.</p>
+</div>
+<div class="panel"><h2>Backup / Restore</h2>
+<p>Your data is stored locally on this PC. Make regular backup copies. Use the JSON backup before moving to another PC.</p>
+<button onclick="backup()" class="success">Download Backup</button>
+<label>Restore Backup JSON</label><input id="restoreFile" type="file" accept=".json" onchange="restore(event)">
+<br><br><button onclick="resetAll()" class="danger">Delete All Data</button><br><br><button onclick="checkData()" class="secondary">Check Data Integrity</button>
+<p id="dataCheck" class="small"></p>
+</div>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const KEY='tayyab_cd_v1';
+const APP_VERSION='3.3.2';
+const CLOUD_CFG_KEY='tayyab_supabase_config_v1';
+const CLOUD_MODIFIED_KEY='tayyab_cloud_local_modified_v1';
+const CLOUD_LAST_SYNC_KEY='tayyab_cloud_last_sync_v1';
+const CLOUD_LAST_REMOTE_KEY='tayyab_cloud_last_remote_v1';
+let cloudClient=null;
+let suppressCloudDirty=false;
+let cloudSyncBusy=false;
+const EMPTY_DB={parties:[],entries:[],trash:[],suppliers:[],supplierEntries:[]};
+let db;
+let balanceCache=null;
+let supplierBalanceCache=null;
+function normalizeDB(x){
+  x=x&&typeof x==='object'?x:{};
+  return {
+    parties:Array.isArray(x.parties)?x.parties:[],
+    entries:Array.isArray(x.entries)?x.entries:[],
+    trash:Array.isArray(x.trash)?x.trash:[],
+    suppliers:Array.isArray(x.suppliers)?x.suppliers:[],
+    supplierEntries:Array.isArray(x.supplierEntries)?x.supplierEntries:[]
+  };
+}
+try{db=normalizeDB(JSON.parse(localStorage.getItem(KEY)||'null'));}
+catch(e){db=normalizeDB(EMPTY_DB);}
+
+const $=id=>document.getElementById(id);
+const money=n=>Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+const save=()=>{
+  balanceCache=null; supplierBalanceCache=null;
+  try{
+    localStorage.setItem(KEY,JSON.stringify(db));
+    if(!suppressCloudDirty) localStorage.setItem(CLOUD_MODIFIED_KEY,String(Date.now()));
+    return true;
+  }catch(e){
+    console.error('Storage error',e);
+    alert('Data save failed. Please make a backup and check browser storage.');
+    return false;
+  }
+};
+function cloudMessage(msg){const el=$('cloudStatus');if(el)el.textContent=msg;}
+function cloudConfig(){try{return JSON.parse(localStorage.getItem(CLOUD_CFG_KEY)||'{}')}catch(e){return {}}}
+function initCloudClient(){
+  const cfg=cloudConfig();
+  if($('sbUrl')&&cfg.url)$('sbUrl').value=cfg.url;
+  if($('sbKey')&&cfg.key)$('sbKey').value=cfg.key;
+  if(!cfg.url||!cfg.key){cloudClient=null;cloudMessage('Enter Project URL and Publishable Key, then save settings.');return null;}
+  if(!window.supabase||!window.supabase.createClient){cloudClient=null;cloudMessage('Supabase library did not load. Open this app through an internet connection and reload.');return null;}
+  if(!cloudClient)cloudClient=window.supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  return cloudClient;
+}
+function saveCloudConfig(){
+  const url=($('sbUrl')?.value||'').trim().replace(/\/$/,'');
+  const key=($('sbKey')?.value||'').trim();
+  if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){alert('Please enter a valid Supabase Project URL, such as https://xxxx.supabase.co');return;}
+  if(!key||!(/^(sb_publishable_|eyJ)/.test(key))){alert('Please enter your Supabase Publishable key. Do not use a secret or service_role key.');return;}
+  localStorage.setItem(CLOUD_CFG_KEY,JSON.stringify({url,key}));cloudClient=null;initCloudClient();cloudMessage('Connection settings saved on this device. Now sign in.');
+}
+function clearCloudConfig(){if(!confirm('Remove Supabase connection settings from this device? Your local khata data will not be deleted.'))return;localStorage.removeItem(CLOUD_CFG_KEY);cloudClient=null;if($('sbUrl'))$('sbUrl').value='';if($('sbKey'))$('sbKey').value='';cloudMessage('Connection settings cleared. Local khata data is unchanged.');}
+async function cloudSignIn(){
+  const c=initCloudClient();if(!c)return;
+  const email=($('sbEmail')?.value||'').trim();const password=$('sbPassword')?.value||'';
+  if(!email||!password){alert('Enter your Supabase Auth email and password.');return;}
+  cloudMessage('Signing in…');
+  const {data,error}=await c.auth.signInWithPassword({email,password});
+  if(error){cloudMessage('Sign in failed: '+error.message);return;}
+  if($('sbPassword'))$('sbPassword').value='';
+  cloudMessage('Signed in as '+(data.user?.email||email)+'. Press Sync Now to compare data.');
+}
+async function cloudSignOut(){
+  const c=initCloudClient();if(!c)return;
+  const {error}=await c.auth.signOut();cloudMessage(error?'Sign out failed: '+error.message:'Signed out. Your local data remains on this device.');
+}
+async function cloudGetSession(){const c=initCloudClient();if(!c)return {client:null,user:null};const {data,error}=await c.auth.getSession();if(error)throw error;return {client:c,user:data.session?.user||null};}
+async function cloudReadRow(c,userId){
+  const {data,error}=await c.from('tayyab_sync').select('payload,updated_at').eq('user_id',userId).eq('module','full_db').eq('record_id','main').maybeSingle();
+  if(error)throw error;return data;
+}
+async function cloudUpload(c,userId){
+  const row={user_id:userId,module:'full_db',record_id:'main',payload:db,updated_at:new Date().toISOString(),deleted_at:null};
+  const {error}=await c.from('tayyab_sync').upsert(row,{onConflict:'user_id,module,record_id'});if(error)throw error;
+  const check=await cloudReadRow(c,userId);const now=Date.now();
+  localStorage.setItem(CLOUD_LAST_SYNC_KEY,String(now));localStorage.setItem(CLOUD_MODIFIED_KEY,String(now));
+  if(check?.updated_at)localStorage.setItem(CLOUD_LAST_REMOTE_KEY,check.updated_at);
+  cloudMessage('Upload successful. Local data was saved to the cloud.');
+}
+async function cloudDownload(row){
+  if(!row||!row.payload||typeof row.payload!=='object')throw new Error('Cloud backup is empty or invalid.');
+  if(!confirm('Download cloud data and REPLACE data on this device? Make sure you have a local JSON backup.'))return;
+  const newDb=normalizeDB(row.payload);
+  suppressCloudDirty=true;
+  try{db=newDb;if(!save())throw new Error('Could not save downloaded data locally.');}
+  finally{suppressCloudDirty=false;}
+  const now=Date.now();localStorage.setItem(CLOUD_LAST_SYNC_KEY,String(now));
+  localStorage.setItem(CLOUD_MODIFIED_KEY,String(now));
+  if(row.updated_at)localStorage.setItem(CLOUD_LAST_REMOTE_KEY,row.updated_at);
+  refresh();cloudMessage('Cloud data downloaded and saved on this device.');
+}
+async function cloudSyncNow(){
+  if(cloudSyncBusy)return;cloudSyncBusy=true;
+  try{
+    const {client,user}=await cloudGetSession();if(!client)return;
+    if(!user){cloudMessage('Please sign in first.');return;}
+    cloudMessage('Checking local and cloud data…');
+    const remote=await cloudReadRow(client,user.id);
+    const lastSync=Number(localStorage.getItem(CLOUD_LAST_SYNC_KEY)||0);
+    const localModified=Number(localStorage.getItem(CLOUD_MODIFIED_KEY)||0);
+    const lastRemote=localStorage.getItem(CLOUD_LAST_REMOTE_KEY)||'';
+    if(!remote){
+      if(confirm('No cloud record exists for this account. Upload this device’s current data to the cloud?'))await cloudUpload(client,user.id);
+      else cloudMessage('No changes made.');
+      return;
+    }
+    if(!lastSync||!lastRemote){
+      const choice=prompt('Cloud data already exists. Type UPLOAD to replace cloud data with this device, or DOWNLOAD to replace this device with cloud data. Cancel to do nothing. First make a JSON backup.');
+      if((choice||'').toUpperCase()==='UPLOAD')await cloudUpload(client,user.id);
+      else if((choice||'').toUpperCase()==='DOWNLOAD')await cloudDownload(remote);
+      else cloudMessage('No changes made.');
+      return;
+    }
+    const localChanged=localModified>lastSync;
+    const remoteChanged=remote.updated_at!==lastRemote;
+    if(localChanged&&remoteChanged){
+      const choice=prompt('CONFLICT: both this device and cloud changed since last sync. Type UPLOAD to keep this device’s full database, or DOWNLOAD to keep the cloud database. This may replace changes from the other device. Cancel to keep both copies unchanged.');
+      if((choice||'').toUpperCase()==='UPLOAD')await cloudUpload(client,user.id);
+      else if((choice||'').toUpperCase()==='DOWNLOAD')await cloudDownload(remote);
+      else cloudMessage('Conflict left unresolved; no data was changed. Make a backup and choose which copy to keep.');
+    }else if(localChanged){await cloudUpload(client,user.id);}
+    else if(remoteChanged){await cloudDownload(remote);}
+    else cloudMessage('Already up to date. No changes needed.');
+  }catch(e){console.error('Cloud sync error',e);cloudMessage('Sync failed: '+(e?.message||String(e))+' — check internet, login, table and RLS policies.');}
+  finally{cloudSyncBusy=false;}
+}
+const pad=n=>String(n).padStart(2,'0');
+const nowDate=()=>{const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;}; const nowTime=()=>{const d=new Date();return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;}; const today=nowDate; const displayTime=e=>e?.time||((e?.createdAt||'').includes('T')?new Date(e.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'}):''); const stamp=(date,time)=>`${date||today()}T${time||nowTime()}`;
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+
+function show(id){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  const page=$(id); if(page) page.classList.add('active');
+  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(x=>{
+    const oc=x.getAttribute('onclick')||'';
+    if(oc.includes("show('"+id+"')")) x.classList.add('active');
+  });
+  refresh();
+}
+function safeRun(fn,name){
+  try{fn();}catch(err){console.error(name+' error:',err);}
+}
+let _refreshQueued=false;
+function refresh(){
+  if(_refreshQueued)return;
+  _refreshQueued=true;
+  const run=()=>{
+    _refreshQueued=false;
+    const active=document.querySelector('.page.active')?.id||'dashboard';
+    if(active==='dashboard') safeRun(dashboard,'Dashboard');
+    if(active==='parties'){safeRun(renderParties,'Parties');safeRun(fillPartySelects,'Party selects');}
+    if(active==='entries'){safeRun(fillPartySelects,'Party selects');safeRun(renderEntries,'Entries');}
+    if(active==='suppliers'){safeRun(fillSupplierSelect,'Supplier filter');safeRun(fillSupplierEntrySelect,'Supplier entry select');safeRun(renderSupplierEntries,'Supplier entries');safeRun(renderSuppliers,'Suppliers');}
+    if(active==='reports') safeRun(fillPartySelects,'Report party select');
+    if(active==='recycle') safeRun(renderTrash,'Recycle Bin');
+    safeRun(clock,'Clock');
+  };
+  if(window.requestAnimationFrame) requestAnimationFrame(run); else setTimeout(run,0);
+}
+function clock(){ const c=$('clock'); if(c)c.textContent=new Date().toLocaleString(); }
+async function createFastPDF(){
+  const report=$('report');
+  if(!report || !report.innerHTML.trim()){ alert('First generate the report.'); return; }
+  if(window.tayyabDesktop?.createPDF){
+    const title='Tayyab Filling Station Report';
+    const result=await window.tayyabDesktop.createPDF(report.innerHTML,title);
+    if(result?.ok) alert('PDF saved successfully.');
+    else if(!result?.canceled) alert('PDF could not be created: '+(result?.error||'Unknown error'));
+    return;
+  }
+  window.print();
+}
+
+
+function rebuildBalanceCache(){
+  balanceCache=new Map(db.parties.map(p=>[p.id,p.openingType==='credit'?Number(p.opening||0):-Number(p.opening||0)]));
+  for(const e of db.entries){const n=Number(e.amount||0);balanceCache.set(e.partyId,(balanceCache.get(e.partyId)||0)+(e.type==='credit'?n:-n));}
+}
+function partyBalance(id){
+  if(!balanceCache)rebuildBalanceCache();
+  return balanceCache.get(id)||0;
+}
+
+function renderParties(){
+  const box=$('partyTable'); if(!box)return;
+  const q=(($('partySearch')||{}).value||'').toLowerCase();
+  const a=db.parties.filter(p=>(p.name||'').toLowerCase().includes(q));
+  if(!a.length){box.innerHTML='<p>No parties added yet.</p>';return;}
+  box.innerHTML='<table><tr><th>Party</th><th>Phone</th><th>Balance</th><th>Actions</th></tr>'+
+    a.map(p=>{
+      const b=partyBalance(p.id);
+      return `<tr><td>${esc(p.name)}</td><td>${esc(p.phone)}</td><td class="${b>=0?'credit':'debit'}">${money(Math.abs(b))} ${b>=0?'Receivable':'Payable'}</td><td><button onclick="partyStatement('${p.id}')">Khata</button> <button onclick="editParty('${p.id}')">Edit</button> <button class="danger" onclick="deleteParty('${p.id}')">Delete</button></td></tr>`;
+    }).join('')+'</table>';
+}
+
+
+function partyTransactions(id){
+  return db.entries.filter(e=>e.partyId===id).slice().sort((a,b)=>
+    (a.date||'').localeCompare(b.date||'') || (a.id||'').localeCompare(b.id||''));
+}
+function supplierTransactions(id){
+  return (db.supplierEntries||[]).filter(e=>e.supplierId===id).slice().sort((a,b)=>
+    (a.date||'').localeCompare(b.date||'') || (a.id||'').localeCompare(b.id||''));
+}
+async function partyStatement(id){
+  const p=db.parties.find(x=>x.id===id); if(!p)return;
+  const rows=partyTransactions(id);
+  let bal=p.openingType==='credit'?Number(p.opening||0):-Number(p.opening||0);
+  let body='';
+  if(Number(p.opening||0)) body+=`<tr><td>Opening</td><td>—</td><td>Opening Balance</td><td>${money(p.opening||0)}</td><td>${p.openingType==='credit'?'Credit':'Debit'}</td><td>${money(Math.abs(bal))} ${bal>=0?'Receivable':'Payable'}</td></tr>`;
+  for(const e of rows){bal += e.type==='credit'?Number(e.amount||0):-Number(e.amount||0);body+=`<tr><td>${esc(e.date)}</td><td>${esc(displayTime(e))}</td><td>${esc(e.note||'')}</td><td>${money(e.amount)}</td><td>${e.type==='credit'?'Credit':'Debit'}</td><td>${money(Math.abs(bal))} ${bal>=0?'Receivable':'Payable'}</td></tr>`;}
+  const html=`<h1>Tayyab Filling Station</h1><h2>Customer Khata Statement</h2><p><b>Customer:</b> ${esc(p.name)} &nbsp; <b>Phone:</b> ${esc(p.phone||'')}</p><div class="summary"><b>Opening: ${money(p.opening||0)}</b><b>Closing: ${money(Math.abs(bal))} ${bal>=0?'Receivable':'Payable'}</b><b>Generated: ${esc(new Date().toLocaleString())}</b></div><table><tr><th>Date</th><th>Time</th><th>Description</th><th>Amount</th><th>Type</th><th>Balance</th></tr>${body||'<tr><td colspan="6">No transactions</td></tr>'}</table>`;
+  if(window.tayyabDesktop?.createPDF){const r=await window.tayyabDesktop.createPDF(html,`Customer Khata - ${p.name}`);if(!r?.ok&&!r?.canceled)alert('PDF could not be created: '+(r?.error||'Unknown error'));return;}
+  window.print();
+}
+async function supplierStatement(id){
+  const p=db.suppliers.find(x=>x.id===id); if(!p)return;
+  const rows=supplierTransactions(id); let bal=p.openingType==='credit'?Number(p.opening||0):-Number(p.opening||0); let body='';
+  if(Number(p.opening||0)) body+=`<tr><td>Opening</td><td>—</td><td>Opening Balance</td><td>${money(p.opening||0)}</td><td>${p.openingType==='credit'?'Credit / Payable':'Debit / Receivable'}</td><td>${money(Math.abs(bal))} ${bal>=0?'Payable':'Receivable'}</td></tr>`;
+  for(const e of rows){bal += e.type==='credit'?Number(e.amount||0):-Number(e.amount||0);body+=`<tr><td>${esc(e.date)}</td><td>${esc(displayTime(e))}</td><td>${esc(e.note||'')}</td><td>${money(e.amount)}</td><td>${e.type==='credit'?'Purchase/Credit':'Payment/Debit'}</td><td>${money(Math.abs(bal))} ${bal>=0?'Payable':'Receivable'}</td></tr>`;}
+  const html=`<h1>Tayyab Filling Station</h1><h2>Supplier Khata Statement</h2><p><b>Supplier:</b> ${esc(p.name)} &nbsp; <b>Phone:</b> ${esc(p.phone||'')}</p><div class="summary"><b>Opening: ${money(p.opening||0)}</b><b>Closing: ${money(Math.abs(bal))} ${bal>=0?'Payable':'Receivable'}</b><b>Generated: ${esc(new Date().toLocaleString())}</b></div><table><tr><th>Date</th><th>Time</th><th>Description</th><th>Amount</th><th>Type</th><th>Balance</th></tr>${body||'<tr><td colspan="6">No transactions</td></tr>'}</table>`;
+  if(window.tayyabDesktop?.createPDF){const r=await window.tayyabDesktop.createPDF(html,`Supplier Khata - ${p.name}`);if(!r?.ok&&!r?.canceled)alert('PDF could not be created: '+(r?.error||'Unknown error'));return;}
+  window.print();
+}
+function quickKhataSearch(){
+  const box=$('quickResults'); if(!box)return;
+  const q=($('quickSearch').value||'').trim().toLowerCase();
+  if(!q){box.innerHTML='<p class="small">Type a customer or supplier name to find the account instantly.</p>';return;}
+  const parties=db.parties.filter(p=>(p.name||'').toLowerCase().includes(q));
+  const suppliers=db.suppliers.filter(p=>(p.name||'').toLowerCase().includes(q));
+  let out='';
+  if(parties.length) out+='<h3>Customers</h3><table><tr><th>Name</th><th>Phone</th><th>Balance</th><th>Action</th></tr>'+
+    parties.slice(0,15).map(p=>{const b=partyBalance(p.id);return `<tr><td>${esc(p.name)}</td><td>${esc(p.phone||'')}</td><td>${money(Math.abs(b))} ${b>=0?'Receivable':'Payable'}</td><td><button onclick="partyStatement('${p.id}')">View Khata</button></td></tr>`}).join('')+'</table>';
+  if(suppliers.length) out+='<h3>Suppliers</h3><table><tr><th>Name</th><th>Phone</th><th>Balance</th><th>Action</th></tr>'+
+    suppliers.slice(0,15).map(p=>{const b=supplierBalance(p.id);return `<tr><td>${esc(p.name)}</td><td>${esc(p.phone||'')}</td><td>${money(Math.abs(b))} ${b>=0?'Payable':'Receivable'}</td><td><button onclick="supplierStatement('${p.id}')">View Khata</button></td></tr>`}).join('')+'</table>';
+  box.innerHTML=out||'<p>No matching customer or supplier found.</p>';
+}
+function clearQuickSearch(){if($('quickSearch'))$('quickSearch').value='';if($('quickResults'))$('quickResults').innerHTML='';}
+
+function clearParty(){
+  $('partyId').value='';$('partyName').value='';$('partyPhone').value='';
+  $('opening').value=0;$('openingType').value='credit';
+}
+function saveParty(){
+  try{
+    const name=$('partyName').value.trim();
+    if(!name){alert('Enter party name');return;}
+    const opening=Number($('opening').value)||0;
+    if(opening<0){alert('Opening balance cannot be negative.');return;}
+    const id=$('partyId').value||newId('party');
+    const p={id,name,phone:$('partyPhone').value.trim(),opening,openingType:$('openingType').value};
+    const old=db.parties.find(x=>x.id===id);
+    if(old)Object.assign(old,p);else db.parties.push(p);
+    if(!save())return;
+    clearParty();refresh();setStatus(old?'Party updated successfully':'Party saved successfully');
+  }catch(e){console.error(e);alert('Party could not be saved.');}
+}
+function editParty(id){
+  const p=db.parties.find(x=>x.id===id);if(!p)return;
+  $('partyId').value=p.id;$('partyName').value=p.name;$('partyPhone').value=p.phone;
+  $('opening').value=p.opening;$('openingType').value=p.openingType;
+  show('parties');
+}
+function deleteParty(id){
+  const p=db.parties.find(x=>x.id===id);if(!p)return;
+  if(!confirm('Move party and its entries to Recycle Bin?'))return;
+  db.trash.push({kind:'party',party:p,entries:db.entries.filter(e=>e.partyId===id),time:Date.now()});
+  db.parties=db.parties.filter(x=>x.id!==id);db.entries=db.entries.filter(x=>x.partyId!==id);
+  if(save())refresh();
+}
+
+function fillPartySelects(){
+  const opts='<option value="">Select Party</option>'+db.parties.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+  if($('eParty'))$('eParty').innerHTML=opts;
+  if($('rParty'))$('rParty').innerHTML=opts;
+}
+
+
+function rebuildSupplierBalanceCache(){
+  supplierBalanceCache=new Map(db.suppliers.map(p=>[p.id,p.openingType==='credit'?Number(p.opening||0):-Number(p.opening||0)]));
+  for(const e of db.supplierEntries){const n=Number(e.amount||0);supplierBalanceCache.set(e.supplierId,(supplierBalanceCache.get(e.supplierId)||0)+(e.type==='credit'?n:-n));}
+}
+function supplierBalance(id){
+  if(!supplierBalanceCache)rebuildSupplierBalanceCache();
+  return supplierBalanceCache.get(id)||0;
+}
+
+function renderSuppliers(){
+  const box=$('supplierList'); if(!box)return;
+  const q=(($('supplierSearch')||{}).value||'').toLowerCase();
+  const a=db.suppliers.filter(p=>(p.name||'').toLowerCase().includes(q));
+  if(!a.length){box.innerHTML='<p>No suppliers added yet.</p>';return;}
+  box.innerHTML='<table><tr><th>Supplier</th><th>Phone</th><th>Balance</th><th>Actions</th></tr>'+
+    a.map(p=>{
+      const b=supplierBalance(p.id);
+      return `<tr><td>${esc(p.name)}</td><td>${esc(p.phone)}</td><td class="${b>=0?'debit':'credit'}">${money(Math.abs(b))} ${b>=0?'Payable':'Receivable'}</td><td><button onclick="supplierStatement('${p.id}')">Khata</button> <button onclick="editSupplier('${p.id}')">Edit</button> <button class="danger" onclick="deleteSupplier('${p.id}')">Delete</button></td></tr>`;
+    }).join('')+'</table>';
+}
+
+function clearSupplier(){
+  $('supplierId').value='';$('supplierName').value='';$('supplierPhone').value='';
+  $('supplierOpening').value=0;$('supplierOpeningType').value='credit';
+}
+
+function saveSupplier(){
+  try{
+    const name=$('supplierName').value.trim();
+    if(!name){alert('Enter supplier name');return;}
+    const opening=Number($('supplierOpening').value)||0;
+    if(opening<0){alert('Opening balance cannot be negative.');return;}
+    const id=$('supplierId').value||newId('supplier');
+    const p={id,name,phone:$('supplierPhone').value.trim(),opening,openingType:$('supplierOpeningType').value};
+    const old=db.suppliers.find(x=>x.id===id);
+    if(old)Object.assign(old,p);else db.suppliers.push(p);
+    if(!save())return;
+    clearSupplier();refresh();setStatus(old?'Supplier updated successfully':'Supplier saved successfully');
+  }catch(e){console.error(e);alert('Supplier could not be saved.');}
+}
+
+function editSupplier(id){
+  const p=db.suppliers.find(x=>x.id===id);if(!p)return;
+  $('supplierId').value=p.id;$('supplierName').value=p.name;$('supplierPhone').value=p.phone;
+  $('supplierOpening').value=p.opening;$('supplierOpeningType').value=p.openingType;
+  show('suppliers');
+}
+
+function deleteSupplier(id){
+  const p=db.suppliers.find(x=>x.id===id);if(!p)return;
+  if(!confirm('Move supplier and its transactions to Recycle Bin?'))return;
+  db.trash.push({kind:'supplier',supplier:p,entries:db.supplierEntries.filter(e=>e.supplierId===id),time:Date.now()});
+  db.suppliers=db.suppliers.filter(x=>x.id!==id);
+  db.supplierEntries=db.supplierEntries.filter(x=>x.supplierId!==id);
+  if(save())refresh();
+}
+
+function fillSupplierSelect(){
+  const el=$('supplierFilter');
+  if(!el) return;
+  const current=el.value;
+  el.innerHTML='<option value="">All Suppliers</option>'+db.suppliers.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+  if(db.suppliers.some(p=>p.id===current)) el.value=current;
+}
+
+function fillSupplierEntrySelect(){
+  const el=$('seSupplier');
+  if(!el) return;
+  const current=el.value;
+  el.innerHTML='<option value="">Select Supplier</option>'+db.suppliers.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+  if(db.suppliers.some(p=>p.id===current)) el.value=current;
+}
+function clearSupplierEntry(){
+  if($('seDate'))$('seDate').value=today();
+  if($('seTime'))$('seTime').value=nowTime();
+  if($('seSupplier'))$('seSupplier').value='';
+  if($('seType'))$('seType').value='credit';
+  if($('seAmount')){$('seAmount').value='';delete $('seAmount').dataset.editId;}
+  if($('seNote'))$('seNote').value='';
+}
+function saveSupplierEntry(){
+  try{
+    const supplierId=$('seSupplier')?.value||'';
+    const amount=Number($('seAmount')?.value);
+    if(!supplierId){alert('Select supplier');return;}
+    if(!Number.isFinite(amount)||amount<=0){alert('Enter a valid amount');return;}
+    const editId=$('seAmount').dataset.editId||'';
+    const date=$('seDate')?.value||today(); const time=$('seTime')?.value||nowTime(); const record={id:editId||newId('stx'),date,time,createdAt:stamp(date,time),supplierId,type:$('seType')?.value||'credit',amount,note:$('seNote')?.value.trim()||''};
+    if(editId){
+      const old=db.supplierEntries.find(x=>x.id===editId);
+      if(!old){alert('Supplier transaction no longer exists.');clearSupplierEntry();return;}
+      Object.assign(old,record);
+    }else db.supplierEntries.push(record);
+    if(!save())return;
+    clearSupplierEntry();refresh();
+    setStatus(editId?'Supplier transaction updated successfully':'Supplier transaction saved successfully');
+  }catch(e){console.error('saveSupplierEntry',e);alert('Supplier transaction save failed.');}
+}
+function editSupplierEntry(id){
+  const e=db.supplierEntries.find(x=>x.id===id);
+  if(!e) return;
+  $('seDate').value=e.date||today();
+  $('seTime').value=e.time||((e.createdAt||'').split('T')[1]||nowTime()).slice(0,8);
+  $('seSupplier').value=e.supplierId;
+  $('seType').value=e.type||'credit';
+  $('seAmount').value=e.amount;
+  $('seNote').value=e.note||'';
+  $('seAmount').dataset.editId=id;
+  show('suppliers');
+}
+function deleteSupplierEntry(id){
+  const e=db.supplierEntries.find(x=>x.id===id);
+  if(!e) return;
+  if(!confirm('Move supplier transaction to Recycle Bin?')) return;
+  db.trash.push({kind:'supplierEntry',entry:e,time:Date.now()});
+  db.supplierEntries=db.supplierEntries.filter(x=>x.id!==id);
+  save(); refresh();
+}
+function renderSupplierEntries(){
+  const box=$('supplierEntries');
+  if(!box) return;
+  const p=$('supplierFilter')?.value||'', f=$('supplierFrom')?.value||'', t=$('supplierTo')?.value||'';
+  const a=db.supplierEntries.filter(e=>(!p||e.supplierId===p)&&(!f||e.date>=f)&&(!t||e.date<=t));
+  box.innerHTML=a.map(e=>{
+    const s=db.suppliers.find(x=>x.id===e.supplierId);
+    const type=e.type==='credit'?'Credit / Purchase':'Debit / Payment';
+    return `<tr><td>${esc(e.date)}</td><td>${esc(displayTime(e))}</td><td>${esc(s?.name||'Deleted Supplier')}</td><td>${type}</td><td>${money(e.amount)}</td><td>${esc(e.note||'')}</td><td><button onclick="editSupplierEntry('${e.id}')">Edit</button> <button class="danger" onclick="deleteSupplierEntry('${e.id}')">Delete</button></td></tr>`;
+  }).join('') || '<tr><td colspan="6">No supplier transactions found.</td></tr>';
+}
+
+function generateSupplierPDF(){
+  const sid=$('supplierFilter')?.value||'';
+  const f=$('supplierFrom')?.value||'',t=$('supplierTo')?.value||'';
+  const supplier=sid?db.suppliers.find(x=>x.id===sid):null;
+  const title=supplier?supplier.name:'All Suppliers';
+  const rows=db.supplierEntries.filter(e=>(!sid||e.supplierId===sid)&&(!f||e.date>=f)&&(!t||e.date<=t))
+    .sort((a,b)=>a.date.localeCompare(b.date)||String(a.id).localeCompare(String(b.id)));
+
+  let running=supplier?(supplier.openingType==='credit'?Number(supplier.opening||0):-Number(supplier.opening||0)):0;
+  const opening=running;
+  let credit=0,debit=0;
+  const body=rows.map(e=>{
+    const amt=Number(e.amount||0);
+    if(e.type==='credit'){credit+=amt;running+=amt;}else{debit+=amt;running-=amt;}
+    return `<tr><td>${esc(e.date)}</td><td>${esc(displayTime(e))}</td><td>${esc(db.suppliers.find(p=>p.id===e.supplierId)?.name||'')}</td><td>${e.type.toUpperCase()}</td><td>${money(amt)}</td><td>${esc(e.note||'')}</td><td>${money(Math.abs(running))} ${running>=0?'Payable':'Receivable'}</td></tr>`;
+  }).join('');
+
+  const w=window.open('','_blank');
+  if(!w){alert('Please allow pop-ups to generate PDF.');return;}
+  w.document.write(`<html><head><title>Tayyab Filling Station - Supplier Complete History</title>
+  <style>
+  @page{size:A4 landscape;margin:12mm}
+  body{font-family:Arial,sans-serif;padding:10px;color:#17202a}
+  h1{margin:0 0 4px}h2{margin:4px 0 14px}
+  .meta{margin:10px 0 16px;line-height:1.7}
+  .summary{display:flex;gap:12px;margin:15px 0}.box{border:1px solid #ccc;padding:10px;min-width:150px}
+  table{width:100%;border-collapse:collapse;margin-top:15px;font-size:12px}
+  th,td{border:1px solid #bbb;padding:7px;text-align:left}th{background:#eee}
+  .footer{margin-top:18px;font-size:12px;color:#555}
+  </style></head><body>
+  ${pdfPumpHeader('Supplier Complete History Report', 'Complete Supplier Khata')}
+  <div class="meta"><b>Supplier:</b> ${esc(title)}<br>
+  <b>Period:</b> ${esc(f||'All Dates')} to ${esc(t||'All Dates')}<br>
+  <b>Generated:</b> ${esc(new Date().toLocaleString())}</div>
+  <div class="summary">
+    <div class="box"><b>Opening Balance</b><br>${money(Math.abs(opening))} ${opening>=0?'Payable':'Receivable'}</div>
+    <div class="box"><b>Total Credit</b><br>${money(credit)}</div>
+    <div class="box"><b>Total Debit</b><br>${money(debit)}</div>
+    <div class="box"><b>Closing Balance</b><br>${money(Math.abs(running))} ${running>=0?'Payable':'Receivable'}</div>
+  </div>
+  <table><tr><th>Date</th><th>Time</th><th>Supplier</th><th>Type</th><th>Amount</th><th>Description</th><th>Running Balance</th></tr>
+  ${body||'<tr><td colspan="6">No supplier transactions found.</td></tr>'}
+  </table>
+  <div class="footer">Complete supplier history includes the selected date range and opening balance where a specific supplier is selected.</div>
+  <script>window.onload=()=>setTimeout(()=>window.print(),300);<\/script></body></html>`);
+  w.document.close();
+}
+
+function pdfPumpHeader(title, subtitle=''){
+  return `<div class="pdf-header"><div class="pdf-brand">Tayyab Filling Station</div><div class="pdf-location">Sargodha</div>${subtitle?`<div class="pdf-subtitle">${esc(subtitle)}</div>`:''}</div><h2>${esc(title)}</h2>`;
+}
+function printReportPDF(){
+  const f=$('rFrom')?.value||'',t=$('rTo')?.value||'',sid=$('rParty')?.value||'';
+  const party=sid?db.parties.find(x=>x.id===sid):null;
+  const title=party?party.name:'All Parties';
+  const rows=db.entries.filter(e=>(!f||e.date>=f)&&(!t||e.date<=t)&&(!sid||e.partyId===sid))
+    .sort((a,b)=>a.date.localeCompare(b.date)||String(a.id).localeCompare(String(b.id)));
+
+  let running=party?(party.openingType==='credit'?Number(party.opening||0):-Number(party.opening||0)):0;
+  const opening=running;
+  let credit=0,debit=0;
+  const body=rows.map(e=>{
+    const amt=Number(e.amount||0);
+    if(e.type==='credit'){credit+=amt;running+=amt;}else{debit+=amt;running-=amt;}
+    return `<tr><td>${esc(e.date)}</td><td>${esc(db.parties.find(p=>p.id===e.partyId)?.name||'')}</td><td>${e.type.toUpperCase()}</td><td>${money(amt)}</td><td>${esc(e.note||'')}</td><td>${money(Math.abs(running))} ${running>=0?'Receivable':'Payable'}</td></tr>`;
+  }).join('');
+
+  const w=window.open('','_blank');
+  if(!w){alert('Please allow pop-ups to generate PDF.');return;}
+  w.document.write(`<html><head><title>Tayyab Filling Station - Complete History</title>
+  <style>
+  @page{size:A4 landscape;margin:12mm}
+  body{font-family:Arial,sans-serif;padding:10px;color:#17202a}
+  h1{margin:0 0 4px}h2{margin:4px 0 14px}
+  .meta{margin:10px 0 16px;line-height:1.7}
+  .summary{display:flex;gap:12px;margin:15px 0}.box{border:1px solid #ccc;padding:10px;min-width:150px}
+  table{width:100%;border-collapse:collapse;margin-top:15px;font-size:12px}
+  th,td{border:1px solid #bbb;padding:7px;text-align:left}th{background:#eee}
+  .footer{margin-top:18px;font-size:12px;color:#555}
+  </style></head><body>
+  ${pdfPumpHeader('Complete Credit / Debit History Report', 'Party Khata Statement')}
+  <div class="meta"><b>Party:</b> ${esc(title)}<br>
+  <b>Period:</b> ${esc(f||'All Dates')} to ${esc(t||'All Dates')}<br>
+  <b>Generated:</b> ${esc(new Date().toLocaleString())}</div>
+  <div class="summary">
+    <div class="box"><b>Opening Balance</b><br>${money(Math.abs(opening))} ${opening>=0?'Receivable':'Payable'}</div>
+    <div class="box"><b>Total Credit</b><br>${money(credit)}</div>
+    <div class="box"><b>Total Debit</b><br>${money(debit)}</div>
+    <div class="box"><b>Closing Balance</b><br>${money(Math.abs(running))} ${running>=0?'Receivable':'Payable'}</div>
+  </div>
+  <table><tr><th>Date</th><th>Time</th><th>Party</th><th>Type</th><th>Amount</th><th>Description</th><th>Running Balance</th></tr>
+  ${body||'<tr><td colspan="6">No transactions found.</td></tr>'}
+  </table>
+  <div class="footer">Complete history includes the selected date range and opening balance where a specific party is selected.</div>
+  <script>window.onload=()=>setTimeout(()=>window.print(),300);<\/script></body></html>`);
+  w.document.close();
+}
+
+
+function clearEntry(){
+  if($('eAmount')){$('eAmount').value='';delete $('eAmount').dataset.editId;}
+  if($('eNote'))$('eNote').value='';
+  if($('eDate'))$('eDate').value=today();
+  if($('eTime'))$('eTime').value=nowTime();
+}
+function saveEntry(){
+  try{
+    const partyId=$('eParty').value;
+    const amount=Number($('eAmount').value);
+    if(!partyId){alert('Select party');return;}
+    if(!Number.isFinite(amount)||amount<=0){alert('Enter a valid amount');return;}
+    const editId=$('eAmount').dataset.editId||'';
+    const date=$('eDate').value||today(); const time=$('eTime').value||nowTime(); const record={id:editId||newId('tx'),date,time,createdAt:stamp(date,time),partyId,type:$('eType').value,amount,note:$('eNote').value.trim()};
+    if(editId){
+      const old=db.entries.find(x=>x.id===editId);
+      if(!old){alert('Entry no longer exists.');clearEntry();return;}
+      Object.assign(old,record);
+    }else db.entries.push(record);
+    if(!save())return;
+    clearEntry();refresh();
+    setStatus(editId?'Entry updated successfully':'Entry saved successfully');
+  }catch(e){console.error('saveEntry',e);alert('Entry save failed. Your existing data is unchanged.');}
+}
+function editEntry(id){
+  const e=db.entries.find(x=>x.id===id);if(!e)return;
+  $('eDate').value=e.date||today();
+  $('eTime').value=e.time||((e.createdAt||'').split('T')[1]||nowTime()).slice(0,8);
+  $('eParty').value=e.partyId||'';
+  $('eType').value=e.type||'credit';
+  $('eAmount').value=e.amount;
+  $('eNote').value=e.note||'';
+  $('eAmount').dataset.editId=id;
+  show('entries');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function deleteEntry(id){
+  const e=db.entries.find(x=>x.id===id);if(!e)return;
+  if(!confirm('Move entry to Recycle Bin?'))return;
+  db.trash.push({kind:'entry',entry:e,time:Date.now()});
+  db.entries=db.entries.filter(x=>x.id!==id);if(save())refresh();
+}
+function renderEntries(){
+  const box=$('entryTable');if(!box)return;
+  const q=(($('entrySearch')||{}).value||'').toLowerCase(),f=$('fromDate')?.value||'',t=$('toDate')?.value||'';
+  const a=db.entries.filter(e=>
+    (!f||e.date>=f)&&(!t||e.date<=t)&&
+    (!q||((db.parties.find(p=>p.id===e.partyId)?.name||'').toLowerCase().includes(q)||(e.note||'').toLowerCase().includes(q)))
+  ).sort((a,b)=>b.date.localeCompare(a.date));
+  if(!a.length){box.innerHTML='<p>No entries found.</p>';return;}
+  box.innerHTML='<table><tr><th>Date</th><th>Time</th><th>Party</th><th>Type</th><th>Amount</th><th>Description</th><th>Action</th></tr>'+
+    a.map(e=>`<tr><td>${e.date}</td><td>${esc(displayTime(e))}</td><td>${esc(db.parties.find(p=>p.id===e.partyId)?.name||'')}</td><td class="${e.type}">${e.type.toUpperCase()}</td><td>${money(e.amount)}</td><td>${esc(e.note)}</td><td><button onclick="editEntry('${e.id}')">Edit</button> <button class="danger" onclick="deleteEntry('${e.id}')">Delete</button></td></tr>`).join('')+'</table>';
+}
+
+function dashboard(){
+  // One-pass totals keep the dashboard fast even with thousands of records.
+  let credit=0,debit=0;
+  for(const e of db.entries){const n=Number(e.amount||0); if(e.type==='credit')credit+=n; else debit+=n;}
+  let receivable=0,payable=0;
+  for(const p of db.parties){const b=partyBalance(p.id); if(b>=0)receivable+=b; else payable+=-b;}
+  let supplierPayable=0,supplierReceivable=0;
+  for(const p of db.suppliers){const b=supplierBalance(p.id); if(b>=0)supplierPayable+=b; else supplierReceivable+=-b;}
+  $('dCredit').textContent=money(credit);$('dDebit').textContent=money(debit);
+  $('dReceivable').textContent=money(receivable);$('dPayable').textContent=money(payable);
+  $('dSupplierPayable').textContent=money(supplierPayable);
+  $('dSupplierReceivable').textContent=money(supplierReceivable);
+  $('dSuppliers').textContent=db.suppliers.length;
+  $('dParties').textContent=db.parties.length;
+  const recent=$('recent');
+  const a=db.entries.slice().sort((x,y)=>y.date.localeCompare(x.date)||String(y.id).localeCompare(String(x.id))).slice(0,10);
+  recent.innerHTML=a.length?
+    '<table><tr><th>Date</th><th>Time</th><th>Party</th><th>Type</th><th>Amount</th><th>Action</th></tr>'+
+    a.map(e=>`<tr><td>${e.date}</td><td>${esc(displayTime(e))}</td><td>${esc(db.parties.find(p=>p.id===e.partyId)?.name||'')}</td><td class="${e.type}">${e.type.toUpperCase()}</td><td>${money(e.amount)}</td><td><button onclick="show('entries')">Open Entries</button></td></tr>`).join('')+
+    '</table>':'No entries yet.';
+  const rs=$('recentSuppliers');
+  const sa=(db.supplierEntries||[]).slice().sort((x,y)=>y.date.localeCompare(x.date)||String(y.id).localeCompare(String(x.id))).slice(0,10);
+  rs.innerHTML=sa.length?
+    '<table><tr><th>Date</th><th>Time</th><th>Supplier</th><th>Type</th><th>Amount</th><th>Action</th></tr>'+
+    sa.map(e=>`<tr><td>${e.date}</td><td>${esc(db.suppliers.find(p=>p.id===e.supplierId)?.name||'')}</td><td class="${e.type}">${e.type==='credit'?'PURCHASE':'PAYMENT'}</td><td>${money(e.amount)}</td><td><button onclick="show('suppliers')">Open Suppliers</button></td></tr>`).join('')+
+    '</table>':'No supplier transactions yet.';
+}
+
+async function generateAllPartiesPDF(){
+  const f=$('rFrom')?.value||'', t=$('rTo')?.value||'', pay=$('rPayment')?.value||'';
+  const parties=db.parties.slice().sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+  if(!parties.length){alert('No customers/parties found.');return;}
+  let totalCredit=0,totalDebit=0;
+  let rows='';
+  for(const p of parties){
+    const opening=p.openingType==='credit'?Number(p.opening||0):-Number(p.opening||0);
+    const entries=db.entries.filter(e=>e.partyId===p.id&&(!f||e.date>=f)&&(!t||e.date<=t)&&(!pay||e.type===pay));
+    let credit=0,debit=0;
+    for(const e of entries){if(e.type==='credit')credit+=Number(e.amount||0);else debit+=Number(e.amount||0);}
+    const closing=opening+credit-debit; totalCredit+=credit; totalDebit+=debit;
+    rows+=`<tr><td>${esc(p.name)}</td><td>${esc(p.phone||'')}</td><td>${money(Math.abs(opening))} ${opening>=0?'Receivable':'Payable'}</td><td>${money(credit)}</td><td>${money(debit)}</td><td>${money(Math.abs(closing))} ${closing>=0?'Receivable':'Payable'}</td><td>${entries.length}</td></tr>`;
+  }
+  const html=`${pdfPumpHeader('All Customers / Parties Complete Report', 'Complete Parties Summary')}<p><b>Period:</b> ${esc(f||'All')} to ${esc(t||'All')} &nbsp; <b>Payment:</b> ${esc(pay||'All Payments')} &nbsp; <b>Generated:</b> ${esc(new Date().toLocaleString())}</p><div class="summary"><b>Total Parties: ${parties.length}</b><b>Total Credit: ${money(totalCredit)}</b><b>Total Debit: ${money(totalDebit)}</b></div><table><tr><th>Party</th><th>Phone</th><th>Opening</th><th>Credit</th><th>Debit</th><th>Closing Balance</th><th>Entries</th></tr>${rows}</table>`;
+  if(window.tayyabDesktop?.createPDF){const r=await window.tayyabDesktop.createPDF(html,'All Customers Parties Report');if(!r?.ok&&!r?.canceled)alert('PDF could not be created: '+(r?.error||'Unknown error'));return;}
+  window.print();
+}
+
+async function generateAllSuppliersPDF(){
+  const f=$('rFrom')?.value||'', t=$('rTo')?.value||'';
+  const suppliers=(db.suppliers||[]).slice().sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+  if(!suppliers.length){alert('No suppliers found.');return;}
+  let totalCredit=0,totalDebit=0,rows='';
+  for(const p of suppliers){
+    const opening=p.openingType==='credit'?Number(p.opening||0):-Number(p.opening||0);
+    const entries=(db.supplierEntries||[]).filter(e=>e.supplierId===p.id&&(!f||e.date>=f)&&(!t||e.date<=t));
+    let credit=0,debit=0;
+    for(const e of entries){if(e.type==='credit')credit+=Number(e.amount||0);else debit+=Number(e.amount||0);}
+    const closing=opening+credit-debit; totalCredit+=credit; totalDebit+=debit;
+    rows+=`<tr><td>${esc(p.name)}</td><td>${esc(p.phone||'')}</td><td>${money(Math.abs(opening))} ${opening>=0?'Payable':'Receivable'}</td><td>${money(credit)}</td><td>${money(debit)}</td><td>${money(Math.abs(closing))} ${closing>=0?'Payable':'Receivable'}</td><td>${entries.length}</td></tr>`;
+  }
+  const html=`${pdfPumpHeader('All Suppliers Complete Report', 'Complete Suppliers Summary')}<p><b>Period:</b> ${esc(f||'All')} to ${esc(t||'All')} &nbsp; <b>Generated:</b> ${esc(new Date().toLocaleString())}</p><div class="summary"><b>Total Suppliers: ${suppliers.length}</b><b>Total Credit/Purchase: ${money(totalCredit)}</b><b>Total Debit/Payment: ${money(totalDebit)}</b></div><table><tr><th>Supplier</th><th>Phone</th><th>Opening</th><th>Credit/Purchase</th><th>Debit/Payment</th><th>Closing Balance</th><th>Entries</th></tr>${rows}</table>`;
+  if(window.tayyabDesktop?.createPDF){const r=await window.tayyabDesktop.createPDF(html,'All Suppliers Complete Report');if(!r?.ok&&!r?.canceled)alert('PDF could not be created: '+(r?.error||'Unknown error'));return;}
+  window.print();
+}
+
+function filteredPartyEntries(){
+  const f=$('rFrom')?.value||'',t=$('rTo')?.value||'',p=$('rParty')?.value||'',pay=$('rPayment')?.value||'';
+  return db.entries.filter(e=>(!f||e.date>=f)&&(!t||e.date<=t)&&(!p||e.partyId===p)&&(!pay||e.type===pay)).sort((a,b)=>(a.date||'').localeCompare(b.date||'')||(a.time||'').localeCompare(b.time||''));
+}
+function generateReport(){
+  const a=filteredPartyEntries();
+  const c=a.filter(e=>e.type==='credit').reduce((s,e)=>s+Number(e.amount||0),0);
+  const d=a.filter(e=>e.type==='debit').reduce((s,e)=>s+Number(e.amount||0),0);
+  const pay=$('rPayment')?.value||'';
+  $('report').innerHTML=`<h3>Party Payment Report</h3><p>Filter: <b>${pay?pay.toUpperCase():'ALL'}</b> &nbsp; Credit: <b>${money(c)}</b> &nbsp; Debit: <b>${money(d)}</b> &nbsp; Net: <b>${money(c-d)}</b> &nbsp; Entries: <b>${a.length}</b></p>`+
+    '<table><tr><th>Date</th><th>Time</th><th>Party</th><th>Payment</th><th>Amount</th><th>Description</th></tr>'+a.map(e=>`<tr><td>${e.date}</td><td>${esc(displayTime(e))}</td><td>${esc(db.parties.find(p=>p.id===e.partyId)?.name||'')}</td><td>${e.type.toUpperCase()}</td><td>${money(e.amount)}</td><td>${esc(e.note)}</td></tr>`).join('')+'</table>';
+}
+async function generateSelectedPartyPDF(){
+  const pId=$('rParty')?.value||'';
+  if(!pId){alert('Please select a customer/party first.');return;}
+  const p=db.parties.find(x=>x.id===pId); if(!p)return;
+  const rows=filteredPartyEntries().filter(e=>e.partyId===pId);
+  let bal=p.openingType==='credit'?Number(p.opening||0):-Number(p.opening||0),credit=0,debit=0;
+  let body='';
+  if(Number(p.opening||0)) body+=`<tr><td>${esc('Opening')}</td><td>—</td><td>Opening Balance</td><td>${money(p.opening||0)}</td><td>${p.openingType==='credit'?'CREDIT':'DEBIT'}</td><td>${money(Math.abs(bal))} ${bal>=0?'Receivable':'Payable'}</td></tr>`;
+  for(const e of rows){const n=Number(e.amount||0);if(e.type==='credit'){credit+=n;bal+=n}else{debit+=n;bal-=n}body+=`<tr><td>${esc(e.date)}</td><td>${esc(displayTime(e))}</td><td>${esc(e.note||'')}</td><td>${money(n)}</td><td>${e.type.toUpperCase()}</td><td>${money(Math.abs(bal))} ${bal>=0?'Receivable':'Payable'}</td></tr>`;}
+  const html=`${pdfPumpHeader('Customer Complete Khata','Digi Khata Style Party Statement')}<p><b>Customer:</b> ${esc(p.name)} &nbsp; <b>Phone:</b> ${esc(p.phone||'')}<br><b>Payment Filter:</b> ${esc($('rPayment')?.value||'All Payments')}<br><b>Period:</b> ${esc($('rFrom')?.value||'All')} to ${esc($('rTo')?.value||'All')} &nbsp; <b>Generated:</b> ${esc(new Date().toLocaleString())}</p><div class="summary"><b>Opening: ${money(Math.abs(p.opening||0))}</b><b>Credit: ${money(credit)}</b><b>Debit: ${money(debit)}</b><b>Closing: ${money(Math.abs(bal))} ${bal>=0?'Receivable':'Payable'}</b></div><table><tr><th>Date</th><th>Time</th><th>Description</th><th>Amount</th><th>Payment</th><th>Balance</th></tr>${body||'<tr><td colspan="6">No transactions found.</td></tr>'}</table>`;
+  if(window.tayyabDesktop?.createPDF){const r=await window.tayyabDesktop.createPDF(html,`Party Khata - ${p.name}`);if(!r?.ok&&!r?.canceled)alert('PDF could not be created: '+(r?.error||'Unknown error'));return;} window.print();
+}
+
+function backup(){
+  try{
+    const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;
+    a.download='Tayyab_Credit_Debit_Backup_'+today()+'.json';
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }catch(e){console.error(e);alert('Backup could not be created.');}
+}
+function restore(ev){
+  const input=ev && ev.target;
+  const file=input && input.files && input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onerror=()=>{alert('Backup file could not be read. Please select the JSON file again.');if(input)input.value='';};
+  reader.onload=()=>{
+    try{
+      let parsed=JSON.parse(String(reader.result||''));
+      if(!parsed || typeof parsed!=='object' || !Array.isArray(parsed.parties) || !Array.isArray(parsed.entries)){
+        throw new Error('This JSON does not contain the required parties and entries arrays.');
+      }
+      const restored=normalizeDB(parsed);
+      if(!confirm('Restore '+restored.parties.length+' parties and '+restored.entries.length+' entries? Current app data will be replaced. Make sure you have a backup first.')){
+        if(input)input.value='';
+        return;
+      }
+      const previous=db;
+      db=restored;
+      if(!save()){
+        db=previous;
+        return;
+      }
+      refresh();
+      setStatus('Backup restored successfully: '+db.parties.length+' parties, '+db.entries.length+' entries.');
+      alert('Backup restored successfully. Parties: '+db.parties.length+'; entries: '+db.entries.length+'.');
+    }catch(e){
+      console.error('Restore backup failed:',e);
+      alert('Restore failed: '+(e && e.message ? e.message : 'Invalid backup file.'));
+    }finally{
+      if(input)input.value='';
+    }
+  };
+  reader.readAsText(file);
+}
+function checkData(){
+  const problems=[];
+  const partyIds=new Set(db.parties.map(x=>x.id));
+  const supplierIds=new Set(db.suppliers.map(x=>x.id));
+  db.entries.forEach((e,i)=>{
+    if(!e.id||!e.date||!partyIds.has(e.partyId)||!Number.isFinite(Number(e.amount))||Number(e.amount)<=0)problems.push('Party entry #'+(i+1));
+  });
+  db.supplierEntries.forEach((e,i)=>{
+    if(!e.id||!e.date||!supplierIds.has(e.supplierId)||!Number.isFinite(Number(e.amount))||Number(e.amount)<=0)problems.push('Supplier entry #'+(i+1));
+  });
+  const box=$('dataCheck');
+  if(!box)return;
+  box.textContent=problems.length?'Issues found: '+problems.join(', '):'Data integrity check passed — no obvious invalid records found.';
+}
+
+function setStatus(msg){
+  const el=$('status'); if(!el)return;
+  el.textContent=msg||'';
+  clearTimeout(setStatus._t); setStatus._t=setTimeout(()=>{el.textContent='';},2500);
+}
+function newId(prefix){
+  try{return prefix+'_'+crypto.randomUUID();}catch(e){return prefix+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);}
+}
+function restoreTrash(i){
+  const item=db.trash[i]; if(!item)return;
+  try{
+    if(item.kind==='party'){
+      if(!db.parties.some(x=>x.id===item.party.id))db.parties.push(item.party);
+      for(const e of (item.entries||[])) if(!db.entries.some(x=>x.id===e.id))db.entries.push(e);
+    }else if(item.kind==='supplier'){
+      if(!db.suppliers.some(x=>x.id===item.supplier.id))db.suppliers.push(item.supplier);
+      for(const e of (item.entries||[])) if(!db.supplierEntries.some(x=>x.id===e.id))db.supplierEntries.push(e);
+    }else if(item.kind==='entry'){
+      if(db.parties.some(x=>x.id===item.entry.partyId) && !db.entries.some(x=>x.id===item.entry.id))db.entries.push(item.entry);
+    }else if(item.kind==='supplierEntry'){
+      if(db.suppliers.some(x=>x.id===item.entry.supplierId) && !db.supplierEntries.some(x=>x.id===item.entry.id))db.supplierEntries.push(item.entry);
+    }
+    db.trash.splice(i,1); save(); refresh(); setStatus('Item restored successfully.');
+  }catch(e){console.error(e);alert('Restore failed.');}
+}
+function permanentlyDeleteTrash(i){
+  if(!db.trash[i])return;
+  if(!confirm('Permanently delete this item? This cannot be undone.'))return;
+  db.trash.splice(i,1); save(); renderTrash(); setStatus('Item permanently deleted.');
+}
+function renderTrash(){
+  const box=$('trashList'); if(!box)return;
+  if(!db.trash.length){box.innerHTML='<tr><td colspan="4">Recycle Bin is empty.</td></tr>';return;}
+  box.innerHTML=db.trash.map((x,i)=>{
+    let name='';
+    if(x.kind==='party')name=x.party?.name||'Party';
+    else if(x.kind==='supplier')name=x.supplier?.name||'Supplier';
+    else if(x.kind==='entry')name=(db.parties.find(p=>p.id===x.entry?.partyId)?.name||'Party')+' — '+money(x.entry?.amount)+' '+(x.entry?.type||'');
+    else name=(db.suppliers.find(p=>p.id===x.entry?.supplierId)?.name||'Supplier')+' — '+money(x.entry?.amount)+' '+(x.entry?.type||'');
+    return `<tr><td>${esc(new Date(x.time||Date.now()).toLocaleString())}</td><td>${esc(x.kind)}</td><td>${esc(name)}</td><td><button onclick="restoreTrash(${i})" class="success">Restore</button> <button onclick="permanentlyDeleteTrash(${i})" class="danger">Delete Forever</button></td></tr>`;
+  }).join('');
+}
+function emptyTrash(){
+  if(!db.trash.length)return;
+  if(!confirm('Permanently delete everything in Recycle Bin?'))return;
+  db.trash=[]; save(); renderTrash(); setStatus('Recycle Bin emptied.');
+}
+
+function resetAll(){
+  if(confirm('DELETE ALL DATA? This cannot be undone except from a backup.')){
+    db={parties:[],entries:[],trash:[],suppliers:[],supplierEntries:[]};save();refresh();
+  }
+}
+
+document.addEventListener('keydown',e=>{const el=e.target;if(el?.classList?.contains('dash-card')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();el.click();}});
+
+document.addEventListener('DOMContentLoaded',()=>{
+  try{
+    if($('eDate'))$('eDate').value=today();
+    if($('eTime'))$('eTime').value=nowTime();
+    if($('seDate'))$('seDate').value=today();
+    if($('seTime'))$('seTime').value=nowTime();
+    refresh();
+    initCloudClient();
+    setInterval(clock,1000);
+  }catch(e){console.error('Startup error',e);alert('Application startup failed. Please reload the file.');}
+});
+</script>
+<script>
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(e=>console.warn('Offline app setup:',e)));
+}
+</script>
+</body></html>
