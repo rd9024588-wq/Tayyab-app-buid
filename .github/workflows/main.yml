@@ -1,0 +1,79 @@
+
+name: TAYYAB APK BUILD - AUTO FOLDER FIX
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Find Project Folder
+        shell: bash
+        run: |
+          set -e
+          PROJECT=""
+          while IFS= read -r file; do
+            dir="$(dirname "$file")"
+            if [ -f "$dir/capacitor.config.json" ] && \
+               [ -f "$dir/www/index.html" ]; then
+              PROJECT="$dir"
+              break
+            fi
+          done < <(find . -name package.json \
+            -not -path '*/node_modules/*' \
+            -not -path '*/android/*')
+
+          if [ -z "$PROJECT" ]; then
+            echo "ERROR: Project files not found."
+            find . -maxdepth 4 -type f | head -200
+            exit 1
+          fi
+
+          echo "PROJECT_DIR=$PROJECT" >> "$GITHUB_ENV"
+          echo "Found project: $PROJECT"
+
+      - name: Install Dependencies
+        run: npm install --no-audit --no-fund
+        working-directory: ${{ env.PROJECT_DIR }}
+
+      - name: Prepare Android
+        run: |
+          if [ ! -d android ]; then
+            npx cap add android
+          fi
+          npx cap sync android
+        working-directory: ${{ env.PROJECT_DIR }}
+
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+        working-directory: ${{ env.PROJECT_DIR }}/android
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tayyab-Filling-Station-APK
+          path: ${{ env.PROJECT_DIR }}/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
