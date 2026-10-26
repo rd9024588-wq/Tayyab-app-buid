@@ -1,0 +1,16 @@
+{
+  "name": "tayyab-filling-station-android",
+  "version": "3.3.2",
+  "private": true,
+  "description": "Tayyab Filling Station Digi Khata offline Android build",
+  "scripts": {
+    "build:android": "npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3"
+  }
+}
