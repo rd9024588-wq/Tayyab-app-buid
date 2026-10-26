@@ -1,0 +1,64 @@
+
+name: Build Tayyab Filling Station APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Tayyab_Filling_Station_APK_Cloud_Build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Verify app files
+        run: |
+          test -f package.json
+          test -f capacitor.config.json
+          test -f www/index.html
+          echo "App files verified"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create Android project
+        run: npx cap add android
+
+      - name: Sync Android project
+        run: npx cap sync android
+
+      - name: Build debug APK
+        working-directory: Tayyab_Filling_Station_APK_Cloud_Build/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tayyab-Filling-Station-APK
+          path: Tayyab_Filling_Station_APK_Cloud_Build/android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
